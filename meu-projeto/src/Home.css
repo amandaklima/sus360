@@ -1,0 +1,242 @@
+.pagina {
+    min-height: 100vh;
+    width: 100%;
+    background: #f7f7f7;
+    box-sizing: border-box;
+}
+
+.header {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    padding-left: 35px;
+    background: #ffffff;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.logo {
+    position: relative;
+    top: 28px;
+    left: 15px;
+    width: 130px;
+    height: auto;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.divContent {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 55px 25px 80px;
+   box-sizing: border-box;
+}
+
+.tituloPagina {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.tituloPagina h1 {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #171d57;
+}
+
+.tituloPagina span {
+    display: block;
+    width: 55px;
+    height: 4px;
+    margin: 16px auto 0;
+    background: #171d57;
+    border-radius: 10px;
+}
+
+.divFiltros {
+    width: 100%;
+    min-height: 190px;
+    display: flex;
+    align-items: center;
+    padding: 30px 32px;
+    margin-bottom: 28px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: none;
+    border-left: 7px solid #171d57;
+    border-radius: 18px;
+    box-shadow:  0 8px 25px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease,background 0.2s ease;
+}
+
+.divFiltros:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.12);
+    background: #fffdfb;
+}
+
+.divFiltros:active {
+    transform: translateY(0);
+}
+
+.divIcone {
+    min-width: 105px;
+    width: 105px;
+    height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    background: #fff3e8;
+    border-radius: 22px;
+    color: #171d57;
+    box-sizing: border-box;
+}
+
+.divTitulo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.divTitulo h2 {
+    margin: 0 0 10px;
+    font-family: Arial, sans-serif;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #252525;
+}
+
+.divTitulo p {
+    margin: 0;
+    max-width: 430px;
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #666666;
+}
+
+.divSeta {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #fff3e8;
+    color: #171d57;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.divFiltros:hover .divSeta {
+    background: #171d57;
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+@media (max-width: 700px) {
+
+    .header {
+        height: 65px;
+        padding-left: 20px;
+    }
+
+    .logoTecon {
+        width: 105px;
+    }
+
+    .divContent {
+        padding: 40px 18px 60px;
+    }
+
+    .tituloPagina {
+        margin-bottom: 35px;
+    }
+
+    .tituloPagina h1 {
+        font-size: 26px;
+    }
+
+    .divFiltros {
+        min-height: 160px;
+        padding: 22px;
+        border-left-width: 5px;
+        border-radius: 15px;
+    }
+
+    .divIcone {
+        min-width: 75px;
+        width: 75px;
+        height: 75px;
+        margin-right: 20px;
+        border-radius: 16px;
+    }
+
+    .divTitulo h2 {
+        font-size: 21px;
+    }
+
+    .divTitulo p {
+        font-size: 14px;
+    }
+
+    .divSeta {
+        width: 26px;
+        height: 26px;
+        margin-left: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .divFiltros {
+        padding: 20px;
+        min-height: 145px;
+    }
+
+    .divIcone {
+        min-width: 60px;
+        width: 60px;
+        height: 60px;
+        margin-right: 15px;
+    }
+
+    .divIcone svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .divTitulo h2 {
+        top: 50;
+        font-size: 18px;
+    }
+
+    .divTitulo p {
+
+        font-size: 13px;
+    }
+
+    .divSeta {
+        width: 38px;
+        height: 38px;
+        margin-left: 8px;
+    }
+
+    .divSeta svg {
+        width: 20px;
+        height: 20px;
+    }
+}
