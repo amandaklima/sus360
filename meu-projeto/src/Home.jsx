@@ -1,75 +1,111 @@
-import styles from "./Home.css";
+import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
-import { Icon } from "@iconify/react";
-import logo from "../../../src/assets/logo.png";
+import logo from "./assets/logo.png";
 
-export const InicioInspecoes = () => {
+const Home = () => {
     const navigate = useNavigate();
 
     return (
         <div className={styles.pagina}>
 
-            <img
-                src={logo}
-                className={styles.logo}
-                alt="Logo"
-                onClick={() => navigate("/")}
-            />
+            <div className={styles.container}>
 
-            <main className={styles.divContent}>
-
-                <div className={styles.tituloPagina}>
-                    <h1>SUS360</h1>
-                    <span></span>
+                {/* Logo */}
+                <div className={styles.logoContainer}>
+                    <img
+                        src={logo}
+                        className={styles.logo}
+                        alt="SUS360"
+                    />
                 </div>
-                <button
-                    className={styles.divFiltros}
-                    onClick={() => navigate("/lista-unidades")}
-                >
-                    <Icon
-                        icon="material-symbols:playlist-add"
-                        className={styles.divIcone}
-                    />
 
-                    <div className={styles.divTitulo}>
-                        <h2>Unidades</h2>
-                        <p>
-                            Busca por Unidade de Saúde
-                        </p>
-                    </div>
+                {/* Título */}
+                <div className={styles.boasVindas}>
+                    <p>Encontre o que precisa</p>
+                </div>
 
-                    <Icon
-                        icon="material-symbols:arrow-forward-ios"
-                        className={styles.divSeta}
-                    />
+                {/* Menu */}
+                <main className={styles.menu}>
 
-                </button>
+                    <button
+                        className={styles.botao}
+                        onClick={() => navigate("/lista-unidades")}
+                    >
+                        <span className={styles.icone}>
+                            +
+                        </span>
 
-                <button
-                    className={styles.divFiltros}
-                    onClick={() => navigate("/lista-unidades")}
-                >
+                        <span className={styles.texto}>
+                            Encontrar Serviço
+                        </span>
 
-                    <Icon
-                        icon="material-symbols:fact-check"
-                        className={styles.divIcone}
-                    />
+                        <span className={styles.seta}>
+                            ›
+                        </span>
+                    </button>
 
-                    <div className={styles.divTitulo}>
-                        <h2>Serviço</h2>
-                        <p>
-                            Busca por Tipo de Atendimento
-                        </p>
-                    </div>
 
-                    <Icon
-                        icon="material-symbols:arrow-forward-ios"
-                        className={styles.divSeta}
-                    />
+                    <button
+                        className={styles.botao}
+                        onClick={() => navigate("/lista-unidades")}
+                    >
+                        <span className={styles.icone}>
+                            ♡
+                        </span>
 
-                </button>
+                        <span className={styles.texto}>
+                            Hospitais
+                        </span>
 
-            </main>
+                        <span className={styles.seta}>
+                            ›
+                        </span>
+                    </button>
+
+
+                    <button
+                        className={styles.botao}
+                        onClick={() => navigate("/lista-unidades")}
+                    >
+                        <span className={styles.icone}>
+                            +
+                        </span>
+
+                        <span className={styles.texto}>
+                            UPA's
+                        </span>
+
+                        <span className={styles.seta}>
+                            ›
+                        </span>
+                    </button>
+
+
+                    <button
+                        className={styles.botao}
+                        onClick={() => navigate("/lista-unidades")}
+                    >
+                        <span className={styles.icone}>
+                            ✓
+                        </span>
+
+                        <span className={styles.texto}>
+                            Postos de Vacinação
+                        </span>
+
+                        <span className={styles.seta}>
+                            ›
+                        </span>
+                    </button>
+
+                </main>
+
+                <p className={styles.rodape}>
+                    SUS360 • O SUS visto por quem usa.
+                </p>
+
+            </div>
+
         </div>
     );
 };
