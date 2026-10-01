@@ -1,0 +1,378 @@
+/* ===== PÁGINA ===== */
+
+.pagina {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #eef0f8;
+    font-family: Arial, sans-serif;
+    color: #202b83;
+}
+
+/* ===== CABEÇALHO ===== */
+
+.topo {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background: #202b83;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.topoConteudo {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 14px 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.titulo {
+    flex: 1;
+    margin: 0;
+
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 700;
+}
+
+.iconeBtn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.iconeBtn:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* ===== CONTEÚDO (mobile: 1 coluna) ===== */
+
+.conteudo {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ===== CARD ===== */
+
+.card {
+    padding: 14px;
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(32, 43, 131, 0.12);
+}
+
+/* ===== AUTOR ===== */
+
+.autorLinha {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #dfe2f7;
+    color: #202b83;
+}
+
+.autorInfo {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.autor {
+    font-size: 14px;
+    color: #202b83;
+}
+
+.data {
+    align-self: flex-start;
+    font-size: 11px;
+    color: #7b80a6;
+}
+
+.estrelas {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.estrelaCheia {
+    color: #f5a623;
+}
+
+.estrelaVazia {
+    color: #d5d8ea;
+}
+
+.texto {
+    margin: 14px 0 0;
+    padding: 14px;
+
+    border-radius: 12px;
+    background: #eef0ff;
+
+    font-size: 14px;
+    line-height: 1.55;
+    color: #2c3260;
+}
+
+/* ===== UNIDADE ===== */
+
+.unidade {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.predio {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+    background: #eef0ff;
+    color: #202b83;
+}
+
+.unidadeInfo {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.unidadeNome {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #202b83;
+}
+
+.linha {
+    margin: 0;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+
+    font-size: 12px;
+    line-height: 1.35;
+    color: #3f4570;
+}
+
+.linha svg {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
+    color: #202b83;
+}
+
+/* ===== NOTA DO SERVIÇO ===== */
+
+.notaTitulo {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #202b83;
+}
+
+.notaLinha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+}
+
+.rotulo {
+    font-size: 13px;
+    font-weight: 700;
+    color: #202b83;
+}
+
+/* ===== BOTÃO VOLTAR ===== */
+
+.voltar {
+    width: 100%;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 12px;
+    background: #202b83;
+    color: #ffffff;
+
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px rgba(32, 43, 131, 0.3);
+
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.voltar:hover {
+    background: #2a37a3;
+}
+
+.voltar:active {
+    transform: scale(0.98);
+}
+
+/* ===== FOCO VISÍVEL (teclado) ===== */
+
+.iconeBtn:focus-visible,
+.voltar:focus-visible {
+    outline: 3px solid #ffd54a;
+    outline-offset: 2px;
+}
+
+/* ===== TABLET (≥ 640px) ===== */
+
+@media (min-width: 640px) {
+    .topoConteudo {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .conteudo {
+        max-width: 680px;
+        padding: 28px 24px 40px;
+        gap: 18px;
+    }
+
+    .lateral {
+        gap: 18px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .texto {
+        font-size: 15px;
+    }
+
+    .linha {
+        font-size: 13px;
+    }
+
+    .voltar {
+        width: auto;
+        min-width: 240px;
+        align-self: center;
+        padding: 0 32px;
+    }
+}
+
+/* ===== DESKTOP (≥ 1024px): avaliação à esquerda, unidade e nota à direita ===== */
+
+@media (min-width: 1024px) {
+    .topoConteudo {
+        max-width: 1000px;
+    }
+
+    .conteudo {
+        max-width: 1000px;
+        padding-top: 36px;
+
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        grid-template-areas:
+            "avaliacao lateral"
+            "voltar voltar";
+        align-items: start;
+        gap: 22px;
+    }
+
+    .conteudo > .card {
+        grid-area: avaliacao;
+    }
+
+    .lateral {
+        grid-area: lateral;
+        gap: 22px;
+    }
+
+    .voltar {
+        grid-area: voltar;
+    }
+}
+
+/* ===== TELAS MUITO PEQUENAS ===== */
+
+@media (max-width: 360px) {
+    .autorLinha {
+        flex-wrap: wrap;
+    }
+
+    .data {
+        width: 100%;
+    }
+}
+
+/* ===== MENOS MOVIMENTO ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    .voltar {
+        transition: none;
+    }
+}
