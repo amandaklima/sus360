@@ -23,17 +23,17 @@ Apoiar a gestão pública: oferecer subsídios para aprimorar a qualidade dos se
  
 **Tecnologias utilizadas**
 
-React — desenvolvimento da interface de usuário.
-JavaScript — implementação da lógica e das funcionalidades da aplicação.
-Vite — ferramenta de desenvolvimento e build do front-end.
-Node.js — ambiente necessário para executar as ferramentas de desenvolvimento.
+React: desenvolvimento da interface de usuário.
+JavaScript: implementação da lógica e das funcionalidades da aplicação.
+Vite: ferramenta de desenvolvimento e build do front-end.
+Node.js: ambiente necessário para executar as ferramentas de desenvolvimento.
  Como executar o front-end
 Pré-requisitos
 Antes de começar, certifique-se de ter instalado:
 
 Node.js
 npm, que normalmente é instalado junto com o Node.js.
-Instalação e execução
+**Instalação e execução**
 Clone o repositório:
 git clone https://github.com/amandaklima/sus360.git
 
