@@ -229,7 +229,8 @@ const ListaUnidades = () => {
                                 <button
                                     type="button"
                                     className={styles.detalhes}
-                                    onClick={() => navigate(`/lista-avaliacoes/${u.id}`)}
+                                    onClick={() => navigate("/lista-avaliacoes")}
+                                    // onClick={() => navigate(`/lista-avaliacoes/${u.id}`)}
                                 >
                                     Ver Avaliações
                                 </button>

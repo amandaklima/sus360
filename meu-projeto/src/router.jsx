@@ -4,6 +4,7 @@ import Home from "./Home";
 import ListaUnidades from "./ListaUnidades";
 import ListaAvaliacoes from "./ListaAvaliacoes";
 import RegistrarAvaliacao from "./RegistrarAvaliacao";
+import EnviarAvaliacao from "./EnviarAvaliacao";
 
 export const router = createBrowserRouter([
     {
@@ -22,4 +23,10 @@ export const router = createBrowserRouter([
         path: "/registro-avaliacoes",
         element: <RegistrarAvaliacao />,
     },
+    {
+        path: "/enviar-avaliacao",
+        element: <EnviarAvaliacao/>,
+    },
+
+
 ]);

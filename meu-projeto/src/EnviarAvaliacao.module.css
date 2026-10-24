@@ -1,0 +1,361 @@
+/* ===== PÁGINA ===== */
+
+.pagina {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #eef0f8;
+    font-family: Arial, sans-serif;
+    color: #202b83;
+}
+
+/* ===== CABEÇALHO ===== */
+
+.topo {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background: #202b83;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.topoConteudo {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 14px 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.titulo {
+    flex: 1;
+    margin: 0;
+
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 700;
+}
+
+.iconeBtn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.iconeBtn:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* ===== CONTEÚDO ===== */
+
+.conteudo {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ===== CARD ===== */
+
+.card {
+    padding: 14px;
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(32, 43, 131, 0.12);
+}
+
+/* ===== CAMPOS ===== */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo + .campo {
+    margin-top: 14px;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #202b83;
+}
+
+.input {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+
+    border: 1.5px solid #d5d8ea;
+    border-radius: 12px;
+    background: #eef0ff;
+    color: #2c3260;
+
+    font: inherit;
+    font-size: 14px;
+
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.input::placeholder {
+    color: #7b80a6;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #202b83;
+    background: #ffffff;
+}
+
+.textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.55;
+}
+
+.inputErro {
+    border-color: #c62828;
+}
+
+.erro {
+    font-size: 12px;
+    color: #c62828;
+}
+
+.rodapeCampo {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.contador {
+    font-size: 11px;
+    color: #7b80a6;
+}
+
+/* ===== NOTA ===== */
+
+.notaTitulo {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #202b83;
+}
+
+.notaLinha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+}
+
+.estrelasInput {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.estrelaBtn {
+    padding: 4px;
+
+    display: flex;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.estrelaBtn:hover {
+    background: #eef0ff;
+}
+
+.estrelaCheia {
+    color: #f5a623;
+}
+
+.estrelaVazia {
+    color: #d5d8ea;
+}
+
+.rotulo {
+    font-size: 13px;
+    font-weight: 700;
+    color: #202b83;
+}
+
+.notaLinha + .erro {
+    display: block;
+    margin-top: 8px;
+}
+
+/* ===== BOTÕES ===== */
+
+.enviar,
+.cancelar {
+    width: 100%;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 12px;
+
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.enviar {
+    border: none;
+    background: #202b83;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(32, 43, 131, 0.3);
+}
+
+.enviar:hover {
+    background: #2a37a3;
+}
+
+.cancelar {
+    border: 1.5px solid #202b83;
+    background: transparent;
+    color: #202b83;
+}
+
+.cancelar:hover {
+    background: #dfe2f7;
+}
+
+.enviar:active,
+.cancelar:active {
+    transform: scale(0.98);
+}
+
+/* ===== CONFIRMAÇÃO ===== */
+
+.sucesso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.sucessoIcone {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #dfe2f7;
+    color: #202b83;
+}
+
+.sucessoTitulo {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.sucessoTexto {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #2c3260;
+}
+
+/* ===== FOCO VISÍVEL (teclado) ===== */
+
+.iconeBtn:focus-visible,
+.estrelaBtn:focus-visible,
+.enviar:focus-visible,
+.cancelar:focus-visible {
+    outline: 3px solid #ffd54a;
+    outline-offset: 2px;
+}
+
+/* ===== TABLET / DESKTOP (≥ 640px) ===== */
+
+@media (min-width: 640px) {
+    .topoConteudo {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .conteudo {
+        max-width: 680px;
+        padding: 28px 24px 40px;
+        gap: 18px;
+    }
+
+    .form {
+        gap: 18px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .input {
+        font-size: 15px;
+    }
+
+    .enviar,
+    .cancelar {
+        width: auto;
+        min-width: 240px;
+        align-self: center;
+        padding: 0 32px;
+    }
+}
+
+/* ===== MENOS MOVIMENTO ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    .input,
+    .enviar,
+    .cancelar {
+        transition: none;
+    }
+}

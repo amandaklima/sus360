@@ -65,7 +65,7 @@ const AVALIACAO = {
 
 /* ---------- Tela ---------- */
 
-const Avaliacao = () => {
+const RegistrarAvaliacao  = () => {
     const navigate = useNavigate();
     const { id } = useParams(); // use para buscar a avaliação na API
     const a = AVALIACAO;
