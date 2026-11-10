@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./EnviarAvaliacao.module.css";
+import { ApiError, criarAvaliacao, listarUnidades, useApi } from "./api";
+import { useAuth } from "./auth";
 
 /* ---------- Ícones ---------- */
 
@@ -38,14 +40,7 @@ const Estrela = ({ tamanho = 34, cheia }) => (
     </svg>
 );
 
-/* ---------- Dados (troque pela sua API) ---------- */
-
-const UNIDADES = [
-    { id: 1, nome: "UBS – Torrões" },
-    { id: 2, nome: "UPA – Torrões" },
-    { id: 3, nome: "Hospital da Restauração" },
-    { id: 4, nome: "Posto de Vacinação – Boa Viagem" },
-];
+/* ---------- Dados ---------- */
 
 const ROTULOS = { 5: "Excelente", 4: "Muito bom", 3: "Bom", 2: "Regular", 1: "Ruim" };
 const MAX_COMENTARIO = 500;
@@ -57,16 +52,24 @@ const hoje = () => new Date().toISOString().split("T")[0];
 const EnviarAvaliacao  = () => {
     const navigate = useNavigate();
     const { id } = useParams(); // opcional: pré-seleciona a unidade
+    const { usuario } = useAuth(); // a rota só abre logado (RequireAuth)
+
+    const { dados: unidadesApi, erro: erroUnidades } = useApi((signal) => listarUnidades({}, signal), []);
+    const UNIDADES = unidadesApi ?? [];
 
     const [form, setForm] = useState({
-        nome: "",
         data: "",
-        unidadeId: id && UNIDADES.some((u) => String(u.id) === id) ? id : "",
+        unidadeId: id ?? "",
         nota: 0,
         comentario: "",
     });
     const [erros, setErros] = useState({});
     const [enviado, setEnviado] = useState(false);
+    const [enviando, setEnviando] = useState(false);
+
+    // ignora o id da rota (ou valor antigo) se não for de uma unidade existente
+    const unidadeSelecionada =
+        UNIDADES.some((u) => String(u.id) === String(form.unidadeId)) ? String(form.unidadeId) : "";
 
     const atualizar = (campo, valor) => {
         setForm((f) => ({ ...f, [campo]: valor }));
@@ -75,27 +78,42 @@ const EnviarAvaliacao  = () => {
 
     const validar = () => {
         const e = {};
-        if (!form.nome.trim()) e.nome = "Informe seu nome.";
         if (!form.data) e.data = "Informe a data do atendimento.";
         else if (form.data > hoje()) e.data = "A data não pode ser no futuro.";
-        if (!form.unidadeId) e.unidadeId = "Escolha a unidade.";
+        if (!unidadeSelecionada) e.unidadeId = "Escolha a unidade.";
         if (!form.nota) e.nota = "Escolha uma nota de 1 a 5 estrelas.";
         if (!form.comentario.trim()) e.comentario = "Escreva um comentário.";
         return e;
     };
 
-    const enviar = (ev) => {
+    const enviar = async (ev) => {
         ev.preventDefault();
 
         const e = validar();
         setErros(e);
         if (Object.keys(e).length > 0) return;
 
-        // Troque pelo envio à sua API:
-        // fetch("/api/avaliacoes", { method: "POST", body: JSON.stringify(form) })
-        console.log("Avaliação enviada:", form);
-
-        setEnviado(true);
+        setEnviando(true);
+        try {
+            // o autor é o usuário logado (a API pega pelo token)
+            await criarAvaliacao({
+                data: form.data, // yyyy-MM-dd, igual ao <input type="date">
+                unidadeId: Number(unidadeSelecionada),
+                nota: form.nota,
+                comentario: form.comentario.trim(),
+            });
+            setEnviado(true);
+        } catch (err) {
+            // erros de validação do servidor caem nos campos; o resto vira aviso geral
+            const doServidor = err instanceof ApiError ? err.campos : {};
+            setErros(
+                Object.keys(doServidor).length > 0
+                    ? doServidor
+                    : { geral: err.message || "Não foi possível enviar. Tente novamente." }
+            );
+        } finally {
+            setEnviando(false);
+        }
     };
 
     /* ----- Confirmação ----- */
@@ -120,7 +138,7 @@ const EnviarAvaliacao  = () => {
                     <button
                         type="button"
                         className={styles.enviar}
-                        onClick={() => navigate(`/lista-avaliacoes/${form.unidadeId}`)}
+                        onClick={() => navigate(`/lista-avaliacoes/${unidadeSelecionada}`)}
                     >
                         Ver avaliações da unidade
                     </button>
@@ -150,21 +168,10 @@ const EnviarAvaliacao  = () => {
             <main className={styles.conteudo}>
                 <form className={styles.form} onSubmit={enviar} noValidate>
                     <section className={styles.card}>
-                        {/* Nome */}
+                        {/* Autor = conta logada */}
                         <div className={styles.campo}>
-                            <label htmlFor="nome" className={styles.label}>Nome</label>
-                            <input
-                                id="nome"
-                                type="text"
-                                className={`${styles.input} ${erros.nome ? styles.inputErro : ""}`}
-                                value={form.nome}
-                                onChange={(e) => atualizar("nome", e.target.value)}
-                                placeholder="Como você quer ser identificado(a)"
-                                autoComplete="name"
-                                aria-invalid={!!erros.nome}
-                                aria-describedby={erros.nome ? "erro-nome" : undefined}
-                            />
-                            {erros.nome && <span id="erro-nome" className={styles.erro}>{erros.nome}</span>}
+                            <span className={styles.label}>Avaliando como</span>
+                            <span className={styles.autor}>{usuario?.nome}</span>
                         </div>
 
                         {/* Data do atendimento */}
@@ -189,7 +196,7 @@ const EnviarAvaliacao  = () => {
                             <select
                                 id="unidade"
                                 className={`${styles.input} ${erros.unidadeId ? styles.inputErro : ""}`}
-                                value={form.unidadeId}
+                                value={unidadeSelecionada}
                                 onChange={(e) => atualizar("unidadeId", e.target.value)}
                                 aria-invalid={!!erros.unidadeId}
                                 aria-describedby={erros.unidadeId ? "erro-unidade" : undefined}
@@ -260,7 +267,14 @@ const EnviarAvaliacao  = () => {
                         </div>
                     </section>
 
-                    <button type="submit" className={styles.enviar}>Enviar avaliação</button>
+                    {erroUnidades && (
+                        <span className={styles.erro} role="alert">{erroUnidades.message}</span>
+                    )}
+                    {erros.geral && <span className={styles.erro} role="alert">{erros.geral}</span>}
+
+                    <button type="submit" className={styles.enviar} disabled={enviando}>
+                        {enviando ? "Enviando..." : "Enviar avaliação"}
+                    </button>
 
                     <button
                         type="button"

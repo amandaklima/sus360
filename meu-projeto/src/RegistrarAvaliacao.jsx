@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./RegistrarAvaliacao.module.css";
+import { buscarAvaliacao, formatarData, useApi } from "./api";
 
 /* ---------- Ícones ---------- */
 
@@ -45,30 +46,23 @@ const Estrelas = ({ nota, tamanho = 16 }) => (
     </span>
 );
 
-/* ---------- Dados (troque pela sua API, usando o id da rota) ---------- */
+/* ---------- Dados ---------- */
 
 const ROTULOS = { 5: "Excelente", 4: "Muito bom", 3: "Bom", 2: "Regular", 1: "Ruim" };
-
-const AVALIACAO = {
-    autor: "Usuário Anônimo",
-    data: "12/08/2025",
-    nota: 5,
-    texto:
-        "Fui atendido(a) pelo Dr. Carlos na unidade. O atendimento foi excelente, equipe muito atenciosa e o ambiente bem organizado.",
-    unidade: {
-        nome: "UBS – Torrões",
-        endereco: "Rua dos Torrões, 123 – Recife/PE",
-        horario: "Segunda a Sexta · 7h às 17h",
-        telefone: "(81) 4003-8920",
-    },
-};
 
 /* ---------- Tela ---------- */
 
 const RegistrarAvaliacao  = () => {
     const navigate = useNavigate();
-    const { id } = useParams(); // use para buscar a avaliação na API
-    const a = AVALIACAO;
+    const { id } = useParams();
+    const { dados: a, erro, carregando } = useApi((signal) => buscarAvaliacao(id, signal), [id]);
+
+    const voltar = (
+        <button type="button" className={styles.voltar} onClick={() => navigate(-1)}>
+            <IconVoltar size={18} />
+            Voltar
+        </button>
+    );
 
     return (
         <div className={styles.pagina}>
@@ -89,6 +83,19 @@ const RegistrarAvaliacao  = () => {
             </header>
 
             <main className={styles.conteudo}>
+              {erro || carregando || !a ? (
+                <>
+                    <p role={erro ? "alert" : undefined}>
+                        {erro
+                            ? erro.status === 404
+                                ? "Avaliação não encontrada."
+                                : erro.message
+                            : "Carregando avaliação..."}
+                    </p>
+                    {voltar}
+                </>
+              ) : (
+              <>
                 {/* Avaliação */}
                 <section className={styles.card}>
                     <div className={styles.autorLinha}>
@@ -99,7 +106,7 @@ const RegistrarAvaliacao  = () => {
                             <Estrelas nota={a.nota} />
                         </div>
 
-                        <time className={styles.data}>{a.data}</time>
+                        <time className={styles.data}>{formatarData(a.data)}</time>
                     </div>
 
                     <p className={styles.texto}>{a.texto}</p>
@@ -129,14 +136,9 @@ const RegistrarAvaliacao  = () => {
                     </section>
                 </div>
 
-                <button
-                    type="button"
-                    className={styles.voltar}
-                    onClick={() => navigate(-1)}
-                >
-                    <IconVoltar size={18} />
-                    Voltar
-                </button>
+                {voltar}
+              </>
+              )}
             </main>
         </div>
     );

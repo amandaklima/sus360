@@ -1,0 +1,282 @@
+/* ===== PÁGINA ===== */
+
+.pagina {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #eef0f8;
+    font-family: Arial, sans-serif;
+    color: #202b83;
+}
+
+/* ===== CABEÇALHO ===== */
+
+.topo {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background: #202b83;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.topoConteudo {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 14px 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.titulo {
+    flex: 1;
+    margin: 0;
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 700;
+}
+
+.iconeBtn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.iconeBtn:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* ===== CONTEÚDO ===== */
+
+.conteudo {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 20px 16px 32px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.card {
+    padding: 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(32, 43, 131, 0.12);
+}
+
+.aviso {
+    margin: 0;
+    padding: 12px 14px;
+
+    border-radius: 12px;
+    background: #dfe2f7;
+    color: #202b83;
+
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+/* ===== CAMPOS ===== */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.input {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    box-sizing: border-box;
+
+    border: 1.5px solid #d5d8ea;
+    border-radius: 12px;
+    background: #eef0ff;
+    color: #2c3260;
+
+    font: inherit;
+    font-size: 15px;
+
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.input::placeholder {
+    color: #7b80a6;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #202b83;
+    background: #ffffff;
+}
+
+.inputErro {
+    border-color: #c62828;
+}
+
+.senhaLinha {
+    position: relative;
+}
+
+.senhaLinha .input {
+    padding-right: 48px;
+}
+
+.olho {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #5b6190;
+    cursor: pointer;
+}
+
+.olho:hover {
+    background: #dfe2f7;
+    color: #202b83;
+}
+
+.erro {
+    font-size: 12px;
+    color: #c62828;
+}
+
+.dica {
+    margin-top: -6px;
+    font-size: 12px;
+    color: #7b80a6;
+}
+
+.erroGeral {
+    margin: 0;
+    padding: 12px 14px;
+
+    border: 1px solid #f3c2c2;
+    border-radius: 12px;
+    background: #fdecec;
+    color: #b71c1c;
+
+    font-size: 14px;
+}
+
+/* ===== BOTÃO ===== */
+
+.enviar {
+    width: 100%;
+    height: 48px;
+
+    border: none;
+    border-radius: 12px;
+    background: #202b83;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(32, 43, 131, 0.3);
+
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.enviar:hover {
+    background: #2a37a3;
+}
+
+.enviar:active {
+    transform: scale(0.98);
+}
+
+.enviar:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.alternar {
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+    color: #2c3260;
+}
+
+.alternar a {
+    color: #202b83;
+    font-weight: 700;
+}
+
+/* ===== FOCO VISÍVEL ===== */
+
+.iconeBtn:focus-visible,
+.olho:focus-visible,
+.enviar:focus-visible,
+.alternar a:focus-visible {
+    outline: 3px solid #ffd54a;
+    outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+    .conteudo {
+        padding-top: 40px;
+    }
+
+    .card {
+        padding: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .input,
+    .enviar {
+        transition: none;
+    }
+}
