@@ -1,0 +1,57 @@
+# Configuração da API SUS360.
+# Valores sensíveis vêm de variáveis de ambiente ou do arquivo api/.env (não versionado).
+spring:
+  application:
+    name: sus360-api
+  config:
+    import: optional:file:.env[.properties]
+
+  datasource:
+    # Session pooler do Supabase (IPv4). O host direto db.<projeto>.supabase.co só responde em IPv6.
+    url: ${DB_URL:jdbc:postgresql://aws-0-us-west-2.pooler.supabase.com:5432/postgres?sslmode=require}
+    username: ${DB_USER:postgres.wryunefmcekdlttiddzr}
+    password: ${DB_PASSWORD}
+    hikari:
+      # schema próprio: fica fora da Data API do Supabase (que expõe só o "public")
+      schema: ${DB_SCHEMA:sus360}
+      maximum-pool-size: ${DB_POOL_SIZE:5}
+      minimum-idle: 1
+      connection-timeout: 15000
+
+  flyway:
+    schemas: ${DB_SCHEMA:sus360}
+    default-schema: ${DB_SCHEMA:sus360}
+    create-schemas: true
+    locations: classpath:db/migration
+
+  jackson:
+    default-property-inclusion: always
+    serialization:
+      write-dates-as-timestamps: false
+
+  mvc:
+    problemdetails:
+      enabled: false
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+app:
+  # Origens liberadas no CORS, separadas por vírgula. Aceita curingas (ex.: https://*.vercel.app).
+  cors-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:4173,http://127.0.0.1:5173}
+  # Fuso usado para validar "data do atendimento não pode ser no futuro".
+  fuso: America/Recife
+  jwt:
+    # Chave secreta para assinar os tokens de login (mínimo 32 caracteres). Nunca versionar.
+    segredo: ${JWT_SECRET:}
+    # Validade do login (ex.: 24h, 7d)
+    expiracao: ${JWT_EXPIRACAO:24h}

@@ -1,6 +1,7 @@
 import styles from "./Home.module.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "./assets/logo.png";
+import { useAuth } from "./auth";
 
 const Svg = ({ children }) => (
     <svg
@@ -64,6 +65,7 @@ const itens = [
 
 const Home = () => {
     const navigate = useNavigate();
+    const { usuario, sair } = useAuth();
 
     return (
         <div className={styles.pagina}>
@@ -102,6 +104,27 @@ const Home = () => {
                         </button>
                     ))}
                 </main>
+
+                {/* Conta */}
+                <nav className={styles.conta} aria-label="Conta">
+                    {usuario ? (
+                        <>
+                            <span className={styles.ola}>
+                                Olá, <strong>{usuario.nome.split(" ")[0]}</strong>
+                            </span>
+                            <button type="button" className={styles.contaBtn} onClick={sair}>
+                                Sair
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login" className={styles.contaBtn}>Entrar</Link>
+                            <Link to="/cadastro" className={`${styles.contaBtn} ${styles.contaBtnCheio}`}>
+                                Criar conta
+                            </Link>
+                        </>
+                    )}
+                </nav>
 
                 <p className={styles.rodape}>
                     SUS360 • O SUS visto por quem usa.

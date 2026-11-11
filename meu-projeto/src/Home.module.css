@@ -217,6 +217,65 @@
     transform: translateX(2px);
 }
 
+/* ===== CONTA (entrar / sair) ===== */
+
+.conta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    font-family: Arial, sans-serif;
+}
+
+.ola {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.contaBtn {
+    min-height: 38px;
+    padding: 0 18px;
+    box-sizing: border-box;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    background: transparent;
+    color: #ffffff;
+
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.contaBtn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.contaBtnCheio {
+    border-color: #ffffff;
+    background: #ffffff;
+    color: #202b83;
+}
+
+.contaBtnCheio:hover {
+    background: #eef0ff;
+}
+
+.contaBtn:focus-visible {
+    outline: 3px solid #ffd54a;
+    outline-offset: 2px;
+}
+
 /* ===== RODAPÉ ===== */
 
 .rodape {
@@ -307,6 +366,7 @@
         font-size: 13px;
     }
 
+    .conta,
     .rodape {
         grid-column: 1 / -1;
     }

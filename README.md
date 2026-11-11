@@ -50,6 +50,16 @@ Acesse a aplicação pelo navegador:
 
 http://localhost:5173/
 
+**API e banco de dados**
+
+O back-end fica na pasta `api` (Java 21, Spring Boot, JDBC e Flyway) e usa o PostgreSQL do Supabase. Para rodar:
+
+cd api
+copie .env.example para .env e preencha DB_PASSWORD e JWT_SECRET
+./mvnw spring-boot:run   (no Windows: mvnw.cmd spring-boot:run)
+
+A API sobe em http://localhost:8080 e cria as tabelas sozinha na primeira execução. Detalhes em `api/README.md`.
+
 O SUS360 está em fase de desenvolvimento, com foco na construção de uma plataforma que conecte informações sobre os serviços públicos de saúde às experiências dos cidadãos.
 
  Contexto acadêmico

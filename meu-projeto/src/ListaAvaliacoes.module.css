@@ -338,3 +338,6 @@
         transform: none;
     }
 }
+.cardClicavel {
+    cursor: pointer;
+}

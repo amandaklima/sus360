@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import styles from "./ListaUnidades.module.css";
+import { listarUnidades, useApi } from "./api";
 
 /* ---------- Ícones ---------- */
 
@@ -47,58 +48,7 @@ const Estrelas = ({ nota }) => (
     </span>
 );
 
-/* ---------- Dados (troque pela sua API) ---------- */
-
-const UNIDADES = [
-    {
-        id: 1,
-        tipo: "UBS",
-        nome: "UBS – Torrões",
-        endereco: "Rua dos Torrões, 123 – Recife/PE",
-        horario: "Segunda a Sexta · 7h às 17h",
-        telefone: "(81) 4003-8920",
-        nota: 4.7,
-        avaliacoes: 109,
-        servicos: ["Vacinas", "Exames", "Atendimentos", "Medicamentos"],
-        foto: null,
-    },
-    {
-        id: 2,
-        tipo: "UPA",
-        nome: "UPA – Torrões",
-        endereco: "Av. Recife, 456 – Recife/PE",
-        horario: "Todos os dias · 24h",
-        telefone: "(81) 3184-0000",
-        nota: 4.5,
-        avaliacoes: 98,
-        servicos: ["Exames", "Atendimentos"],
-        foto: null,
-    },
-    {
-        id: 3,
-        tipo: "Hospital",
-        nome: "Hospital da Restauração",
-        endereco: "Av. Agamenon Magalhães, s/n – Recife/PE",
-        horario: "Todos os dias · 24h",
-        telefone: "(81) 3181-5400",
-        nota: 4.2,
-        avaliacoes: 312,
-        servicos: ["Exames", "Atendimentos"],
-        foto: null,
-    },
-    {
-        id: 4,
-        tipo: "Posto",
-        nome: "Posto de Vacinação – Boa Viagem",
-        endereco: "Rua dos Navegantes, 800 – Recife/PE",
-        horario: "Segunda a Sábado · 8h às 16h",
-        telefone: "(81) 3355-1000",
-        nota: 4.8,
-        avaliacoes: 54,
-        servicos: ["Vacinas"],
-        foto: null,
-    },
-];
+/* ---------- Dados ---------- */
 
 const CATEGORIAS = ["Todos", "Vacinas", "Exames", "Atendimentos", "Medicamentos"];
 
@@ -108,9 +58,6 @@ const TIPO_POR_ROTA = {
     upas: "UPA",
     vacinacao: "Posto",
 };
-
-const normalizar = (t) =>
-    t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 /* ---------- Tela ---------- */
 
@@ -123,17 +70,26 @@ const ListaUnidades = () => {
 
     const tipoFiltro = TIPO_POR_ROTA[params.get("tipo")];
 
-    const unidades = useMemo(() => {
-        const termo = normalizar(busca.trim());
+    // espera o usuário parar de digitar antes de consultar a API
+    const [buscaAplicada, setBuscaAplicada] = useState("");
+    useEffect(() => {
+        const t = setTimeout(() => setBuscaAplicada(busca.trim()), 300);
+        return () => clearTimeout(t);
+    }, [busca]);
 
-        return UNIDADES.filter((u) => {
-            if (tipoFiltro && u.tipo !== tipoFiltro) return false;
-            if (categoria !== "Todos" && !u.servicos.includes(categoria)) return false;
-            if (!termo) return true;
-
-            return normalizar(`${u.nome} ${u.endereco} ${u.tipo}`).includes(termo);
-        });
-    }, [busca, categoria, tipoFiltro]);
+    const { dados, erro, carregando } = useApi(
+        (signal) =>
+            listarUnidades(
+                {
+                    tipo: tipoFiltro,
+                    servico: categoria === "Todos" ? undefined : categoria,
+                    busca: buscaAplicada,
+                },
+                signal
+            ),
+        [tipoFiltro, categoria, buscaAplicada]
+    );
+    const unidades = dados ?? [];
 
     return (
         <div className={styles.pagina}>
@@ -190,7 +146,11 @@ const ListaUnidades = () => {
                 </div>
 
                 {/* Lista */}
-                {unidades.length === 0 ? (
+                {erro ? (
+                    <p className={styles.vazio} role="alert">{erro.message}</p>
+                ) : carregando && !dados ? (
+                    <p className={styles.vazio}>Carregando unidades...</p>
+                ) : unidades.length === 0 ? (
                     <p className={styles.vazio}>
                         Nenhuma unidade encontrada. Tente outro nome ou categoria.
                     </p>
@@ -229,8 +189,7 @@ const ListaUnidades = () => {
                                 <button
                                     type="button"
                                     className={styles.detalhes}
-                                    onClick={() => navigate("/lista-avaliacoes")}
-                                    // onClick={() => navigate(`/lista-avaliacoes/${u.id}`)}
+                                    onClick={() => navigate(`/lista-avaliacoes/${u.id}`)}
                                 >
                                     Ver Avaliações
                                 </button>

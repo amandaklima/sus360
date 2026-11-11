@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./ListaAvaliacoes.module.css";
+import { formatarData, listarAvaliacoes, useApi } from "./api";
 
 /* ---------- Ícones ---------- */
 
@@ -49,18 +50,7 @@ const Estrelas = ({ nota }) => (
     </span>
 );
 
-/* ---------- Dados (troque pela sua API) ---------- */
-
-const AVALIACOES = [
-    { id: 1, autor: "Usuário Anônimo", nota: 5, data: "12/08/2025", texto: "Fui atendido(a) pelo Dr. Carlos na unidade. O atendimento foi excelente, equipe muito atenciosa e o ambiente bem organizado." },
-    { id: 2, autor: "Usuário Anônimo", nota: 4, data: "30/04/2025", texto: "A unidade é boa, mas esperei muito cheia. Tive que aguardar um pouco, mas fui bem atendido(a) no final." },
-    { id: 3, autor: "Usuário Anônimo", nota: 5, data: "15/04/2025", texto: "Ótimo atendimento! A equipe é muito educada e o local é limpo. Recomendo!" },
-    { id: 4, autor: "Usuário Anônimo", nota: 3, data: "02/04/2025", texto: "Gostei do atendimento, mas o sistema estava um pouco lento. Fora isso, tudo correu bem." },
-    { id: 5, autor: "Usuário Anônimo", nota: 5, data: "28/03/2025", texto: "Vacinação rápida e sem fila. Profissionais muito simpáticos." },
-    { id: 6, autor: "Usuário Anônimo", nota: 2, data: "20/03/2025", texto: "Demorou mais de duas horas para ser chamado. Faltou informação sobre o tempo de espera." },
-    { id: 7, autor: "Usuário Anônimo", nota: 4, data: "11/03/2025", texto: "Boa estrutura e farmácia com os medicamentos que eu precisava." },
-    { id: 8, autor: "Usuário Anônimo", nota: 5, data: "02/03/2025", texto: "Exames agendados e entregues no prazo. Atendimento nota 10." },
-];
+/* ---------- Dados ---------- */
 
 const POR_PAGINA = 4;
 const FILTROS = ["Todas", 5, 4, 3, 2, 1];
@@ -69,22 +59,24 @@ const FILTROS = ["Todas", 5, 4, 3, 2, 1];
 
 const ListaAvaliacoes = () => {
     const navigate = useNavigate();
+    const { id } = useParams();
 
     const [filtro, setFiltro] = useState("Todas");
     const [filtroAberto, setFiltroAberto] = useState(false);
     const [pagina, setPagina] = useState(1);
 
-    const filtradas = useMemo(
-        () =>
-            filtro === "Todas"
-                ? AVALIACOES
-                : AVALIACOES.filter((a) => a.nota === filtro),
-        [filtro]
+    const { dados, erro, carregando } = useApi(
+        (signal) =>
+            listarAvaliacoes(
+                id,
+                { nota: filtro === "Todas" ? undefined : filtro, page: pagina, size: POR_PAGINA },
+                signal
+            ),
+        [id, filtro, pagina]
     );
 
-    const totalPaginas = Math.max(1, Math.ceil(filtradas.length / POR_PAGINA));
-    const inicio = (pagina - 1) * POR_PAGINA;
-    const visiveis = filtradas.slice(inicio, inicio + POR_PAGINA);
+    const visiveis = dados?.conteudo ?? [];
+    const totalPaginas = dados?.totalPaginas ?? 1;
 
     const escolherFiltro = (valor) => {
         setFiltro(valor);
@@ -138,16 +130,31 @@ const ListaAvaliacoes = () => {
                 )}
 
                 {/* Lista */}
-                {visiveis.length === 0 ? (
+                {erro ? (
+                    <p className={styles.vazio} role="alert">
+                        {erro.status === 404 ? "Unidade não encontrada." : erro.message}
+                    </p>
+                ) : carregando && !dados ? (
+                    <p className={styles.vazio}>Carregando avaliações...</p>
+                ) : visiveis.length === 0 ? (
                     <p className={styles.vazio}>Nenhuma avaliação com essa nota ainda.</p>
                 ) : (
                     <ul className={styles.lista}>
                         {visiveis.map((a) => (
-                            <li key={a.id} className={styles.card}>
+                            <li
+                                key={a.id}
+                                className={`${styles.card} ${styles.cardClicavel}`}
+                                role="link"
+                                tabIndex={0}
+                                onClick={() => navigate(`/registro-avaliacoes/${a.id}`)}
+                                onKeyDown={(ev) => {
+                                    if (ev.key === "Enter") navigate(`/registro-avaliacoes/${a.id}`);
+                                }}
+                            >
                                 <div className={styles.cardTopo}>
                                     <strong className={styles.autor}>{a.autor}</strong>
                                     <Estrelas nota={a.nota} />
-                                    <time className={styles.data}>{a.data}</time>
+                                    <time className={styles.data}>{formatarData(a.data)}</time>
                                 </div>
 
                                 <p className={styles.texto}>{a.texto}</p>
@@ -160,7 +167,7 @@ const ListaAvaliacoes = () => {
                 <button
                     type="button"
                     className={styles.enviar}
-                    onClick={() => navigate("/enviar-avaliacao")}
+                    onClick={() => navigate(`/enviar-avaliacao/${id}`)}
                 >
                     <IconLapis />
                     Enviar Avaliação
@@ -172,7 +179,7 @@ const ListaAvaliacoes = () => {
                         type="button"
                         className={styles.pagBtn}
                         onClick={() => setPagina((p) => p - 1)}
-                        disabled={pagina === 1}
+                        disabled={pagina === 1 || carregando}
                         aria-label="Página anterior"
                     >
                         <IconAnterior />
@@ -186,7 +193,7 @@ const ListaAvaliacoes = () => {
                         type="button"
                         className={styles.pagBtn}
                         onClick={() => setPagina((p) => p + 1)}
-                        disabled={pagina === totalPaginas}
+                        disabled={pagina >= totalPaginas || carregando}
                         aria-label="Próxima página"
                     >
                         <IconProxima />
