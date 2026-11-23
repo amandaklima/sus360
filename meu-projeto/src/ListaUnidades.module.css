@@ -1,0 +1,412 @@
+/* ===== PÁGINA ===== */
+
+.pagina {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--fundo);
+    color: var(--texto);
+}
+
+/* ===== CABEÇALHO ===== */
+
+.topo {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    background: var(--azul);
+    color: #ffffff;
+    box-shadow: 0 2px 12px rgba(22, 30, 94, 0.25);
+}
+
+.topoConteudo {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 12px 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.voltar {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.voltar:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.titulo {
+    flex: 1;
+    margin: 0;
+
+    font-size: clamp(17px, 2.2vw, 21px);
+    font-weight: 800;
+}
+
+/* ===== CONTEÚDO ===== */
+
+.conteudo {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 16px 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ===== BUSCA ===== */
+
+.buscaLinha {
+    display: flex;
+    gap: 10px;
+}
+
+.busca {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: var(--papel);
+    border: 2px solid var(--linha);
+    border-radius: 14px;
+    color: var(--azul);
+
+    box-shadow: var(--sombra);
+}
+
+.busca:focus-within {
+    border-color: var(--azul);
+}
+
+.busca input {
+    flex: 1;
+    min-width: 0;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    font-size: 16px;
+    color: var(--texto);
+}
+
+.busca input::placeholder {
+    color: #8a8fb3;
+}
+
+.filtroBtn {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid var(--linha);
+    border-radius: 14px;
+    background: var(--papel);
+    color: var(--azul);
+    cursor: pointer;
+
+    box-shadow: var(--sombra);
+}
+
+.filtroBtn:hover {
+    border-color: var(--azul);
+}
+
+/* ===== CATEGORIAS ===== */
+
+.chips {
+    display: flex;
+    gap: 8px;
+
+    /* rolagem horizontal no celular, sem barra visível */
+    overflow-x: auto;
+    padding: 2px 2px 4px;
+    scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar {
+    display: none;
+}
+
+.chip {
+    flex-shrink: 0;
+    padding: 9px 16px;
+
+    border: 1.5px solid var(--linha);
+    border-radius: 999px;
+    background: var(--papel);
+    color: var(--azul);
+
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.chip:hover {
+    border-color: var(--azul);
+}
+
+.chipAtivo,
+.chipAtivo:hover {
+    border-color: var(--azul);
+    background: var(--azul);
+    color: #ffffff;
+}
+
+/* ===== LISTA ===== */
+
+.lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.vazio {
+    margin: 36px 0;
+    text-align: center;
+    font-size: 15px;
+    color: var(--texto-suave);
+}
+
+/* ===== CARD ===== */
+
+.card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    background: var(--papel);
+    border-radius: 18px;
+    box-shadow: var(--sombra);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-alta);
+}
+
+.cardTopo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.foto {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--azul-claro);
+}
+
+.foto img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--azul);
+
+    font-size: 12px;
+    font-weight: 800;
+    box-shadow: 0 1px 4px rgba(22, 30, 94, 0.18);
+}
+
+.info {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px 6px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nome {
+    margin: 0 0 2px;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--azul);
+}
+
+.linha {
+    margin: 0;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--texto);
+}
+
+.linha svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    color: var(--laranja);
+}
+
+.avaliacao {
+    margin: 4px 0 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 13px;
+    color: var(--texto-suave);
+}
+
+.estrelas {
+    display: inline-flex;
+    gap: 1px;
+}
+
+.estrelaCheia {
+    color: #f5a623;
+}
+
+.estrelaVazia {
+    color: #d5d8ea;
+}
+
+/* ===== BOTÃO ===== */
+
+.detalhes {
+    width: calc(100% - 32px);
+    height: 46px;
+    margin: 12px 16px 16px;
+
+    border: none;
+    border-radius: 12px;
+    background: var(--azul);
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.detalhes:hover {
+    background: var(--azul-escuro);
+}
+
+.detalhes:active {
+    transform: scale(0.98);
+}
+
+/* ===== FOCO VISÍVEL (teclado) ===== */
+
+.voltar:focus-visible,
+.filtroBtn:focus-visible,
+.chip:focus-visible,
+.detalhes:focus-visible {
+    outline: 3px solid var(--laranja);
+    outline-offset: 2px;
+}
+
+.voltar:focus-visible {
+    outline-color: #ffffff;
+}
+
+/* ===== TABLET (≥ 640px): 2 colunas ===== */
+
+@media (min-width: 640px) {
+    .topoConteudo,
+    .conteudo {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .conteudo {
+        padding-top: 22px;
+        gap: 18px;
+    }
+
+    .lista {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .chips {
+        flex-wrap: wrap;
+        overflow: visible;
+    }
+}
+
+/* ===== DESKTOP (≥ 1024px): 3 colunas ===== */
+
+@media (min-width: 1024px) {
+    .lista {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ===== MENOS MOVIMENTO ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    .chip,
+    .detalhes,
+    .card {
+        transition: none;
+    }
+
+    .card:hover,
+    .detalhes:active {
+        transform: none;
+    }
+}

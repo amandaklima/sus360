@@ -1,0 +1,33 @@
+# Sobe o projeto inteiro:  docker compose up --build
+#   API  (.jar, Spring Boot)  -> http://localhost:8080   (health: /actuator/health)
+#   Site (npm run dev, Vite)  -> http://localhost:5173
+# Parar: Ctrl+C  (ou "docker compose down" em outro terminal)
+services:
+  api:
+    build: ./api                 # usa api/Dockerfile: compila e roda o .jar
+    container_name: sus360-api
+    env_file: ./api/.env         # DB_PASSWORD, JWT_SECRET, CORS_ORIGINS... (o .env NÃO vai para a imagem)
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  web:
+    image: node:22-slim
+    container_name: sus360-web
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173 --strictPort"
+    environment:
+      # o navegador (no seu PC) é quem chama a API, então é localhost mesmo
+      VITE_API_URL: http://localhost:8080
+      # bind mount do Windows não avisa mudanças de arquivo: o Vite passa a varrer sozinho
+      USE_POLLING: "true"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./meu-projeto:/app
+      - web_node_modules:/app/node_modules   # node_modules do Linux, separado do seu (Windows)
+    depends_on:
+      - api
+
+volumes:
+  web_node_modules:
